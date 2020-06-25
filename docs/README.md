@@ -13,3 +13,9 @@ NestJs에서 기본 단위는 Module입니다. Controller를 추가하고 싶어
 # cats module을 만든 뒤, 아래 명령어를 실행하면 CatsController가 생성되며, CatsModule의 controller로 자동으로 등록됩니다.
 >> nest g controller module/cats
 ```
+
+## Providers
+
+service, repository, factory, helper 등의 class가 provider입니다.
+provider는 의존성을 주입할 수 있습니다.
+@Injectable() 데코레이터가 붙은 class가 provider입니다.

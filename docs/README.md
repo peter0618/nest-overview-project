@@ -32,3 +32,15 @@ provider는 의존성을 주입할 수 있습니다.
 모듈은 기본적으로 singleton이며 shared module이라서 하나의 provider를 여러 모듈에서 공유하여 사용할 수 있습니다.
 
 @Global() 데코레이터를 Module 클래스에 추가하면 다른 모든 모듈에서 별도로 import 하지 않아도, 해당 모듈의 provider를 inject 받아 사용할 수 있습니다.
+
+## Middleware
+
+클라이언트의 요청이 Route Handler에 전달되기 전에 middleware에서 어떤 작업을 처리해줄 수 있습니다.
+예를 들어, 어떤 요청이 들어왔는지 간단한 로그를 찍는 방법으로도 사용 가능합니다.
+
+미들웨어 작성방법은 간단합니다. NestMiddleware 를 구현하는 class를 작성하고 @Injectable() 데코레이터를 적용합니다. 그리고 use 메소드를 구현하여 메소드 안에 처리하고싶은 작업 내용을 채우면 됩니다. 마지막에는 꼭 next(); 메소드로 끝내줘야 미들웨어의 작업을 마치고 다음 작업으로 넘어갑니다. (다음 작업은 또다른 미들웨어가 실행되거나, Route Handler가 될 수 있습니다.)
+
+작성된 미들웨어를 실행하기 위해서는 모듈에서 NestModule을 implement 하면 됩니다.
+그러면, configure 메소드를 작성해야 하는데 consumer로 적용할 미들웨어와 적용대상 routes를 설정할 수 있습니다.
+
+간단한 미들웨어는 함수를 하나 작성해서 적용하는 functional middleware를 사용할 것을 권장합니다.

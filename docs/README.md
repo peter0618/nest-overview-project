@@ -44,3 +44,8 @@ provider는 의존성을 주입할 수 있습니다.
 그러면, configure 메소드를 작성해야 하는데 consumer로 적용할 미들웨어와 적용대상 routes를 설정할 수 있습니다.
 
 간단한 미들웨어는 함수를 하나 작성해서 적용하는 functional middleware를 사용할 것을 권장합니다.
+
+## Exception filters
+
+exception 발생시 리턴 메시지 형태를 customize 해서 사용할 수 있습니다.
+Exception filter를 사용하면 exception 발생시 메소드,컨트롤러,앱 등의 단위로 처리로직 및 리턴 메시지를 정의하는 것이 가능합니다.

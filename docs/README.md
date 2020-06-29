@@ -49,3 +49,9 @@ provider는 의존성을 주입할 수 있습니다.
 
 exception 발생시 리턴 메시지 형태를 customize 해서 사용할 수 있습니다.
 Exception filter를 사용하면 exception 발생시 메소드,컨트롤러,앱 등의 단위로 처리로직 및 리턴 메시지를 정의하는 것이 가능합니다.
+
+## Pipes
+
+역할 : 데이터 transformation과 validation
+데이터 transformation은 단순 형변환 이외에도, 기본값 설정 등을 해줘야 할 때 설정 로직을 비즈니스 로직으로부터 분리시켜 pipe에 정의해서 사용할 수 있습니다.
+class-validator와 class-transformer 패키지를 설치하면 class validation을 쉽게 적용 가능합니다.

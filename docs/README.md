@@ -55,3 +55,9 @@ Exception filter를 사용하면 exception 발생시 메소드,컨트롤러,앱 
 역할 : 데이터 transformation과 validation
 데이터 transformation은 단순 형변환 이외에도, 기본값 설정 등을 해줘야 할 때 설정 로직을 비즈니스 로직으로부터 분리시켜 pipe에 정의해서 사용할 수 있습니다.
 class-validator와 class-transformer 패키지를 설치하면 class validation을 쉽게 적용 가능합니다.
+
+## Guards
+
+Guards는 authorization 역할을 수행합니다.
+Guards는 middleware 다음에, 그리고 interceptor 나 pipe 이전에 수행됩니다.
+Guards를 이용해서 인증(authentication)과 권한부여(authorization)를 쉽게 셋팅할 수 있습니다.

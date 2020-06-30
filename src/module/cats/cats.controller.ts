@@ -9,21 +9,26 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
-  UseFilters, UsePipes,
+  Put, SetMetadata,
+  UseFilters, UseGuards, UsePipes,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
 import { HttpExceptionFilter } from '../../filter/http-exception.filter';
 import { ValidationPipe } from '../../pipes/validation.pipe';
+import { Roles } from '../../auth/roles.decorator';
+import { AuthGuard } from '../../auth/auth.guard';
 
 @Controller('cats')
 // @UseFilters(HttpExceptionFilter)
+@UseGuards(AuthGuard)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
+  // @SetMetadata('roles', ['admin'])
+  @Roles('admin', 'user')
   async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
     // throw new ForbiddenException();

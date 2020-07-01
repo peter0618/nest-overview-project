@@ -12,11 +12,11 @@ import { globalLogger } from '../../middleware/global.middleware';
 })
 export class CatsModule implements NestModule{
   configure(consumer: MiddlewareConsumer): any {
-    consumer
-      // .apply(LoggerMiddleware) // 미들웨어 적용하기
-      .apply(logger) // functional 미들웨어 적용하기
-      // .forRoutes('cats') // 이렇게 작성하면 모든 request method 에 대해 적용됩니다.
-      // .forRoutes({path: 'cats', method: RequestMethod.GET}) // GET 방식 요청에 한정적으로 적용됩니다.
-      .forRoutes(CatsController);
+    // consumer
+    //   // .apply(LoggerMiddleware) // 미들웨어 적용하기
+    //   .apply(logger) // functional 미들웨어 적용하기
+    //   // .forRoutes('cats') // 이렇게 작성하면 모든 request method 에 대해 적용됩니다.
+    //   // .forRoutes({path: 'cats', method: RequestMethod.GET}) // GET 방식 요청에 한정적으로 적용됩니다.
+    //   .forRoutes(CatsController);
   }
 }

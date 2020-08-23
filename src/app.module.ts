@@ -1,11 +1,20 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './module/cats/cats.module';
+import { LoggerModule } from './logger/logger.module';
+import { MyLogger } from './logger/logger.service';
 
 @Module({
-  imports: [CatsModule],
+  imports: [CatsModule, LoggerModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MyLogger],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  private readonly logger: MyLogger = new MyLogger(this.constructor.name);
+
+  onModuleInit() {
+    this.logger.log({ a: { b: { c: 1 } } });
+    console.log('!!!');
+  }
+}

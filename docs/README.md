@@ -61,3 +61,22 @@ class-validator와 class-transformer 패키지를 설치하면 class validation�
 Guards는 authorization 역할을 수행합니다.
 Guards는 middleware 다음에, 그리고 interceptor 나 pipe 이전에 수행됩니다.
 Guards를 이용해서 인증(authentication)과 권한부여(authorization)를 쉽게 셋팅할 수 있습니다.
+
+## Logger
+
+NestJS에서는 @nestjs/common 패키지에서 제공하는 Logger를 기본적으로 사용합니다.
+아래와 같이 간단한 커스터마이징도 가능합니다.
+```bash
+const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn'], // 로그 level 명시
+  });
+```
+
+LoggerService 구현체를 만들고, 아래와 같이 AppModule 생성 옵션에 설정을 추가하면 커스터마이징한 Logger를 사용할 수 있습니다.
+```bash
+const app = await NestFactory.create(AppModule, {
+    logger: new MyLogger('TEST_APP'),
+  });
+```
+위와 같이 설정하면 기존에 시스템에서 찍던 로그가 log 콜백 메서드를 타게 됩니다.
+process.stdout.write와 cli-color 패키지를 이용하여 원하는 색상, 로그 형태를 커스터마이징할 수 있습니다.

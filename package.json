@@ -27,6 +27,7 @@
     "@types/hapi__joi": "^17.1.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "moment": "^2.27.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4"

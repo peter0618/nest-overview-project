@@ -14,7 +14,6 @@ export class AppModule implements OnModuleInit {
   private readonly logger: MyLogger = new MyLogger(this.constructor.name);
 
   onModuleInit() {
-    this.logger.log({ a: { b: { c: 1 } } });
-    console.log('!!!');
+    this.logger.debug(`onModuleInit()`);
   }
 }

@@ -1,17 +1,17 @@
 import * as clc from 'cli-color';
-import { Injectable, LoggerService, Optional } from '@nestjs/common';
+import { Injectable, LoggerService, LogLevel, Optional } from '@nestjs/common';
 import { isObject } from '@nestjs/common/utils/shared.utils';
 import moment = require('moment');
 
 /**
  * Custom Logger 입니다.
  *
- * TODO : 2) LogLevel 설정하기
  * TODO : 3) error 로그시, trace 처리
  */
 @Injectable()
 export class MyLogger implements LoggerService {
   // private static instance?: typeof MyLogger | LoggerService = MyLogger;
+  private static _logLevels: LogLevel[] = ['log', 'error', 'warn', 'debug', 'verbose'];
   private static appName: string;
   private readonly COLOR_OF_ERROR = clc.red;
   private readonly COLOR_OF_DEBUG = clc.magentaBright;
@@ -30,39 +30,58 @@ export class MyLogger implements LoggerService {
   }
 
   error(message: any, trace?: string, context?: string) {
+    console.log(`message : ${message.toString()}`);
+    console.log(`trace : ${trace}`);
+    // console.log(`trace : ${trace.toString()}`);
+    if(!MyLogger.isLogLevelEnabled('error')){
+      return;
+    }
     this.printMessage(this.COLOR_OF_ERROR, message, context);
+
     // TODO : 단순히 로그를 찍는 것이 아니라 trace 를 어떻게 찍을지 표현해야 합니다.
   }
 
   debug(message: any, context?: string) {
+    if(!MyLogger.isLogLevelEnabled('debug')){
+      return;
+    }
     this.printMessage(this.COLOR_OF_DEBUG, message, context);
   }
 
   log(message: any, context?: string) {
+    if(!MyLogger.isLogLevelEnabled('log')){
+      return;
+    }
     this.printMessage(this.COLOR_OF_LOG, message, context);
   }
 
   verbose(message: any, context?: string) {
+    if(!MyLogger.isLogLevelEnabled('verbose')){
+      return;
+    }
     this.printMessage(this.COLOR_OF_VERBOSE, message, context);
   }
 
   warn(message: any, context?: string) {
+    if(!MyLogger.isLogLevelEnabled('warn')){
+      return;
+    }
     this.printMessage(this.COLOR_OF_WARN, message, context);
+  }
+
+  private static isLogLevelEnabled(logLevel: LogLevel) {
+    return MyLogger._logLevels.includes(logLevel);
+  }
+
+  static set logLevels(value: LogLevel[]) {
+    this._logLevels = value;
   }
 
   private printMessage(color: any, message: any, context?: string) {
     const pidMessage = color(`[${MyLogger.appName}] ${process.pid} - `);
-    const contextMessage = this.COLOR_OF_CONTEXT(
-      `[${context || this.context}]`,
-    );
-    const timestamp = this.COLOR_OF_TIMESTAMP(
-      `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
-    );
-    const output = isObject(message)
-      ? color(`Object:\n${JSON.stringify(message, null, 2)}`)
-      : color(`${message}`);
-    process.stdout.write(
-      `${pidMessage}${timestamp} ${contextMessage} ${output} \n`,
-    );
+    const contextMessage = this.COLOR_OF_CONTEXT(`[${context || this.context}]`);
+    const timestamp = this.COLOR_OF_TIMESTAMP(`${moment().format('YYYY-MM-DD HH:mm:ss')}`);
+    const output = isObject(message) ? color(`Object:\n${JSON.stringify(message, null, 2)}`) : color(`${message}`);
+    process.stdout.write(`${pidMessage}${timestamp} ${contextMessage} ${output} \n`);
   }
 }

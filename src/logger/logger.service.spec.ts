@@ -18,6 +18,7 @@ describe('LoggerService', () => {
   });
 
   it('logging color check', () => {
+    MyLogger.logLevels = ['error'];
     logger.log('log');
     logger.verbose('verbose');
     logger.debug('debug');

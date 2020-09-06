@@ -5,8 +5,6 @@ import moment = require('moment');
 
 /**
  * Custom Logger 입니다.
- *
- * TODO : 3) error 로그시, trace 처리
  */
 @Injectable()
 export class MyLogger implements LoggerService {
@@ -14,6 +12,7 @@ export class MyLogger implements LoggerService {
   private static _logLevels: LogLevel[] = ['log', 'error', 'warn', 'debug', 'verbose'];
   private static appName: string;
   private readonly COLOR_OF_ERROR = clc.red;
+  private readonly COLOR_OF_TRACE = clc.red;
   private readonly COLOR_OF_DEBUG = clc.magentaBright;
   private readonly COLOR_OF_LOG = clc.green;
   private readonly COLOR_OF_VERBOSE = clc.blueBright;
@@ -29,41 +28,56 @@ export class MyLogger implements LoggerService {
     this.context = context;
   }
 
+  /**
+   * try ~ catch 로 wrapping 하지 않은 에러에 대해서는 자동적으로 error 로직을 탑니다.
+   * 이 때, message 에 string type 으로 에러 메시지가 들어오고, trace 에 string type 으로 stack trace 가 들어 옵니다.
+   *
+   * try ~ catch 로 wrapping 한 경우, message 는 object type 으로 들어옵니다.
+   * 이 때, message.message, message.stack 으로 각각 message, trace 를 가져올 수 있습니다.
+   * @param message
+   * @param trace
+   * @param context
+   */
   error(message: any, trace?: string, context?: string) {
-    console.log(`message : ${message.toString()}`);
-    console.log(`trace : ${trace}`);
-    // console.log(`trace : ${trace.toString()}`);
-    if(!MyLogger.isLogLevelEnabled('error')){
+    if (typeof message === 'object') {
+      trace = message.stack;
+      message = message.message;
+    }
+
+    if (!MyLogger.isLogLevelEnabled('error')) {
       return;
     }
+
     this.printMessage(this.COLOR_OF_ERROR, message, context);
 
-    // TODO : 단순히 로그를 찍는 것이 아니라 trace 를 어떻게 찍을지 표현해야 합니다.
+    if (trace) {
+      this.printMessage(this.COLOR_OF_TRACE, trace, context);
+    }
   }
 
   debug(message: any, context?: string) {
-    if(!MyLogger.isLogLevelEnabled('debug')){
+    if (!MyLogger.isLogLevelEnabled('debug')) {
       return;
     }
     this.printMessage(this.COLOR_OF_DEBUG, message, context);
   }
 
   log(message: any, context?: string) {
-    if(!MyLogger.isLogLevelEnabled('log')){
+    if (!MyLogger.isLogLevelEnabled('log')) {
       return;
     }
     this.printMessage(this.COLOR_OF_LOG, message, context);
   }
 
   verbose(message: any, context?: string) {
-    if(!MyLogger.isLogLevelEnabled('verbose')){
+    if (!MyLogger.isLogLevelEnabled('verbose')) {
       return;
     }
     this.printMessage(this.COLOR_OF_VERBOSE, message, context);
   }
 
   warn(message: any, context?: string) {
-    if(!MyLogger.isLogLevelEnabled('warn')){
+    if (!MyLogger.isLogLevelEnabled('warn')) {
       return;
     }
     this.printMessage(this.COLOR_OF_WARN, message, context);

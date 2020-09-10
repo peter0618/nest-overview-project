@@ -80,3 +80,17 @@ const app = await NestFactory.create(AppModule, {
 ```
 위와 같이 설정하면 기존에 시스템에서 찍던 로그가 log 콜백 메서드를 타게 됩니다.
 process.stdout.write와 cli-color 패키지를 이용하여 원하는 색상, 로그 형태를 커스터마이징할 수 있습니다.
+
+## Queues
+
+@nestjs/bull package 를 활용하여 메시지큐를 사용할 수 있습니다.
+Bull은 Redis를 기본적으로 사용하기 때문에 redis가 설치되어 있어야 합니다. 
+
+우선 docker 부터 셋팅합니다.
+https://dingrr.com/blog/post/redis-%EB%8F%84%EC%BB%A4docker%EB%A1%9C-redis-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0
+```bash
+$ docker pull redis
+$ docker network create redis-net
+$ docker run --name peter-redis -p 6000:6000 --network redis-net -d redis redis-server --appendonly yes
+$ docker run -it --network redis-net --rm redis redis-cli -h peter-redis
+```

@@ -6,9 +6,11 @@ import { LoggerModule } from './logger/logger.module';
 import { MyLogger } from './logger/logger.service';
 import { AudioModule } from './module/audio/audio.module';
 import { ViewController } from './views/view.controller';
+import { ModuleAModule } from './module/module-a/module-a.module';
+import { ModuleBModule } from './module/module-b/module-b.module';
 
 @Module({
-  imports: [CatsModule, LoggerModule, AudioModule],
+  imports: [CatsModule, LoggerModule, AudioModule, ModuleAModule, ModuleBModule],
   controllers: [AppController, ViewController],
   providers: [AppService, MyLogger],
 })

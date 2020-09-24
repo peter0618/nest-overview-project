@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { CatsModule } from './module/cats/cats.module';
 import { LoggerModule } from './logger/logger.module';
 import { MyLogger } from './logger/logger.service';
+import { AudioModule } from './module/audio/audio.module';
 
 @Module({
-  imports: [CatsModule, LoggerModule],
+  imports: [CatsModule, LoggerModule, AudioModule],
   controllers: [AppController],
   providers: [AppService, MyLogger],
 })

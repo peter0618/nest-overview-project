@@ -86,11 +86,20 @@ process.stdout.write와 cli-color 패키지를 이용하여 원하는 색상, �
 @nestjs/bull package 를 활용하여 메시지큐를 사용할 수 있습니다.
 Bull은 Redis를 기본적으로 사용하기 때문에 redis가 설치되어 있어야 합니다. 
 
-우선 docker 부터 셋팅합니다.
-https://dingrr.com/blog/post/redis-%EB%8F%84%EC%BB%A4docker%EB%A1%9C-redis-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0
+우선 redis 부터 셋팅합니다.
+(참고 : https://dingrr.com/blog/post/redis-%EB%8F%84%EC%BB%A4docker%EB%A1%9C-redis-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
 ```bash
 $ docker pull redis
 $ docker network create redis-net
-$ docker run --name peter-redis -p 6000:6000 --network redis-net -d redis redis-server --appendonly yes
-$ docker run -it --network redis-net --rm redis redis-cli -h peter-redis
+$ docker run --name redis -p 6379:6379 --network redis-net -d redis redis-server --appendonly yes
+```
+위 명령을 실행하여 redis docker container 를 하나 띄웁니다.
+```bash
+# 아래 명령어로 redis-cli 를 실행시킬 수 있습니다.
+$ docker run -it --network redis-net --rm redis redis-cli -h redis
+```
+아래 명령어를 실행하여 패키지를 설치합니다.
+```bash
+$ yarn add @nestjs/bull bull
+$ yarn add @types/bull --dev
 ```

@@ -5,10 +5,11 @@ import { CatsModule } from './module/cats/cats.module';
 import { LoggerModule } from './logger/logger.module';
 import { MyLogger } from './logger/logger.service';
 import { AudioModule } from './module/audio/audio.module';
+import { ViewController } from './views/view.controller';
 
 @Module({
   imports: [CatsModule, LoggerModule, AudioModule],
-  controllers: [AppController],
+  controllers: [AppController, ViewController],
   providers: [AppService, MyLogger],
 })
 export class AppModule implements OnModuleInit {

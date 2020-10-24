@@ -30,10 +30,12 @@
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "ejs": "^3.1.5",
+    "fs": "^0.0.1-security",
     "moment": "^2.27.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "xlsx": "^0.16.8"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.13.2",

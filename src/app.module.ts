@@ -8,9 +8,10 @@ import { AudioModule } from './module/audio/audio.module';
 import { ViewController } from './views/view.controller';
 import { ModuleAModule } from './module/module-a/module-a.module';
 import { ModuleBModule } from './module/module-b/module-b.module';
+import { ExcelModule } from './module/excel/excel.module';
 
 @Module({
-  imports: [CatsModule, LoggerModule, AudioModule, ModuleAModule, ModuleBModule],
+  imports: [CatsModule, LoggerModule, AudioModule, ModuleAModule, ModuleBModule, ExcelModule],
   controllers: [AppController, ViewController],
   providers: [AppService, MyLogger],
 })

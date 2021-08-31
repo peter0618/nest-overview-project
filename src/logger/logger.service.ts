@@ -48,10 +48,10 @@ export class MyLogger implements LoggerService {
       return;
     }
 
-    this.printMessage(this.COLOR_OF_ERROR, message, context);
+    this.printMessage(this.COLOR_OF_ERROR, 'error', message, context);
 
     if (trace) {
-      this.printMessage(this.COLOR_OF_TRACE, trace, context);
+      this.printMessage(this.COLOR_OF_TRACE, 'error', trace, context);
     }
   }
 
@@ -59,28 +59,28 @@ export class MyLogger implements LoggerService {
     if (!MyLogger.isLogLevelEnabled('debug')) {
       return;
     }
-    this.printMessage(this.COLOR_OF_DEBUG, message, context);
+    this.printMessage(this.COLOR_OF_DEBUG, 'debug', message, context);
   }
 
   log(message: any, context?: string) {
     if (!MyLogger.isLogLevelEnabled('log')) {
       return;
     }
-    this.printMessage(this.COLOR_OF_LOG, message, context);
+    this.printMessage(this.COLOR_OF_LOG, 'log', message, context);
   }
 
   verbose(message: any, context?: string) {
     if (!MyLogger.isLogLevelEnabled('verbose')) {
       return;
     }
-    this.printMessage(this.COLOR_OF_VERBOSE, message, context);
+    this.printMessage(this.COLOR_OF_VERBOSE, 'verbose', message, context);
   }
 
   warn(message: any, context?: string) {
     if (!MyLogger.isLogLevelEnabled('warn')) {
       return;
     }
-    this.printMessage(this.COLOR_OF_WARN, message, context);
+    this.printMessage(this.COLOR_OF_WARN, 'warn', message, context);
   }
 
   private static isLogLevelEnabled(logLevel: LogLevel) {
@@ -91,11 +91,12 @@ export class MyLogger implements LoggerService {
     this._logLevels = value;
   }
 
-  private printMessage(color: any, message: any, context?: string) {
+  private printMessage(color: any, logLevel: LogLevel, message: any, context?: string) {
     const pidMessage = color(`[${MyLogger.appName}] ${process.pid} - `);
+    const logLevelMessage = color(`[${logLevel.toUpperCase().padStart(7, ' ')}]`);
     const contextMessage = this.COLOR_OF_CONTEXT(`[${context || this.context}]`);
     const timestamp = this.COLOR_OF_TIMESTAMP(`${moment().format('YYYY-MM-DD HH:mm:ss')}`);
     const output = isObject(message) ? color(`Object:\n${JSON.stringify(message, null, 2)}`) : color(`${message}`);
-    process.stdout.write(`${pidMessage}${timestamp} ${contextMessage} ${output} \n`);
+    process.stdout.write(`${pidMessage}${timestamp} ${logLevelMessage}${contextMessage} ${output} \n`);
   }
 }
